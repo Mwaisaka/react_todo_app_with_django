@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0;
+}
+
+.App {
+  text-align: center;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.75rem;
+}
+
+.ToDoWrapper {
+  background: #343d3d80;
+  margin-top: 30px;
+  padding: 5rem;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 1400px;
+  height: auto;
+  margin-bottom: 2rem;
+  
+}
+
+.ToDo-Form {
+    width: 90%;
+    /* display: flex; */
+    align-items: center;
+    justify-content: flex-start; 
+    width: 100% !important; 
+      }
+
+.todo-input-form {
+  outline: none;
+  background: #dad7e0;
+  border: 2px solid #f8f6f6eb !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100% !important;  
+  color: #000;
+  border-radius: 8px !important;
+  padding-left: 3rem;
+}
+
+.todo-input-form::placeholder {
+  color: #9d9a9a;
+  /* padding-left: 1.2rem; */
+}
+
+
+.todo-btn {
+
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.65rem;
+  cursor: pointer;
+  margin-top: 1rem; /* Aligns with input field top margin */
+  margin-bottom: 2rem; /* Aligns with input field bottom margin */
+  width: 120px; /* Sets a fixed width for the button */
+  text-align: center; /* Centers text inside the button */
+}
+
+.ToDo {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  background: #474352b2;
+  color: #fff;
+  padding: 0.0rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  margin-left: 10px;
+  cursor: pointer;
+  width: 95%;
+}
+
+.fa-trash {
+  margin-left: 0.75rem;
+}
+
+.completed {
+  color: #f6f8fab2;
+  text-decoration: line-through;
+}
+ 
+
