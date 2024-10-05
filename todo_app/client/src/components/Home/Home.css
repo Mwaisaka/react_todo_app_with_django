@@ -1,0 +1,23 @@
+/* Custom reflection effect */
+.reflection {
+    position: relative;
+    display: inline-block;
+    color: #000;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Create the reflection using pseudo-element */
+  .reflection::after {
+    content: "To Do App"; /* Duplicate text */
+    position: absolute;
+    top: 100%; /* Place it below the original text */
+    left: 0;
+    right: 0;
+    color: rgba(0, 0, 0, 0.3); /* Transparent reflection */
+    transform: scaleY(-1); /* Flip vertically */
+    opacity: 0.6; /* Lighter reflection */
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.5)); /* Gradual fade */
+    overflow: hidden;
+  }
+  

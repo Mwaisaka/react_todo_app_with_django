@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import EditToDoForm from "./EditToDoForm";
 import ToDo from "./ToDo";
 import "./ToDoList.css";
+import ToDoApp1 from "../Images/ToDoApp1.png";
 
 function ToDoWrapper() {
   const [todos, setToDos] = useState([]);
@@ -88,12 +89,18 @@ function ToDoWrapper() {
   // Tasks Left count for the active tasks
   const tasksLeftCount = activeTasks.length;
   // const tasksLeftCount = todos.filter((todo) => !todo.completed).length;
-  
+
   // Tasks Completed count for the completed tasks
   const tasksCompletedCount = completedTasks.length;
 
   return (
-    <div className="ToDoWrapper animate-swipeUp">
+    <div
+      className="ToDoWrapper animate-swipeUp"
+      style={{ backgroundImage: `url(${ToDoApp1})`,  backgroundSize: "cover", // Cover the entire area
+      backgroundPosition: "center", // Center the image
+      backgroundRepeat: "no-repeat", // Prevent tiling
+      }}
+    >
       <div>
         <h1 className="font-bold">MY TASKS</h1>
         <ToDoForm addToDo={addToDo} />
@@ -130,7 +137,9 @@ function ToDoWrapper() {
           )}
 
           {/* Render Completed Tasks */}
-          <h3 className="ml-4 text-lg mt-6">Completed Tasks [{tasksCompletedCount}]</h3>
+          <h3 className="ml-4 text-lg mt-6">
+            Completed Tasks [{tasksCompletedCount}]
+          </h3>
           {completedTasks.length > 0 ? (
             completedTasks.map((todo) =>
               todo.isEditing ? (

@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals.js";
 import Layout from "./Layout.jsx";
 import Home from "./components/Home/Home.jsx";
 import TodoList from "./components/ToDo/TodoList.jsx";
+import Login from "./components/Login/Login.jsx"
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,6 +21,7 @@ function Main() {
         <Route path="/" element={<Home />} />
         <Route path="todo" element={<ToDoWrapper />} />
         <Route path="todolist" element={<TodoList />} />
+        <Route path="login" element={<Login />} />
       </Route>
     )
   );
