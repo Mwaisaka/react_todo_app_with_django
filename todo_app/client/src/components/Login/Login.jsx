@@ -87,7 +87,7 @@ export default function Login({ onLogin, user }) {
 
   return (
     <div
-      className="pt-1 py-2 mt-4 mb-4"
+      className="pt-1 px-12 py-6 mt-4 mb-4"
       style={{
         backgroundImage: `url(${ToDoApp1})`,
         backgroundSize: "cover", // Cover the entire area
@@ -133,7 +133,7 @@ export default function Login({ onLogin, user }) {
                 id="username"
                 name="username"
                 type="text"
-                placeholder="Please enter your username"
+                placeholder="Enter your username"
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 className="w-full border border-gray-300 rounded-md p-2"
@@ -150,7 +150,7 @@ export default function Login({ onLogin, user }) {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="Please enter your password"
+                placeholder="Enter your password"
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 className="w-full border border-gray-300 rounded-md p-2.5"

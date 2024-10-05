@@ -36,7 +36,7 @@ function Home() {
 
   return (
     <div
-      className="container mx-auto px-4 py-6 mt-4 mb-4"
+      className="container mx-auto px-12 py-6 mt-4 mb-4"
       style={{
         backgroundImage: `url(${ToDoApp1})`,
         backgroundSize: "cover", // Cover the entire area
