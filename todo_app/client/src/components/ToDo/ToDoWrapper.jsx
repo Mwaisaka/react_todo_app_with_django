@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ToDoForm from "./ToDoForm";
 import { v4 as uuidv4 } from "uuid";
 import EditToDoForm from "./EditToDoForm";
@@ -6,7 +6,7 @@ import ToDo from "./ToDo";
 import "./ToDoList.css";
 import ToDoApp1 from "../Images/ToDoApp1.png";
 
-function ToDoWrapper() {
+function ToDoWrapper({ onLogout }) {
   const [todos, setToDos] = useState([]);
 
   // useEffect(() => {
@@ -96,9 +96,11 @@ function ToDoWrapper() {
   return (
     <div
       className="ToDoWrapper animate-swipeUp"
-      style={{ backgroundImage: `url(${ToDoApp1})`,  backgroundSize: "cover", // Cover the entire area
-      backgroundPosition: "center", // Center the image
-      backgroundRepeat: "no-repeat", // Prevent tiling
+      style={{
+        backgroundImage: `url(${ToDoApp1})`,
+        backgroundSize: "cover", // Cover the entire area
+        backgroundPosition: "center", // Center the image
+        backgroundRepeat: "no-repeat", // Prevent tiling
       }}
     >
       <div>
@@ -172,6 +174,14 @@ function ToDoWrapper() {
             )
           )} */}
         </div>
+
+        {/* <button
+          type="submit"
+          onClick={onLogout}
+          className="bg-orange-500 text-white font-bold mt-2 py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 ease-in-out"
+        >
+          Sign out
+        </button> */}
       </div>
     </div>
   );
