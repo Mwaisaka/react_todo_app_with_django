@@ -7,7 +7,7 @@ function Home() {
   const text = "To Do App"; // The full text to display
   const speed = 350; // Speed of typing (in milliseconds)
   const pauseDuration = 2500; // Pause before the cycle starts again
-  
+
   useEffect(() => {
     let index = 0;
     let intervalId = null;
@@ -15,14 +15,14 @@ function Home() {
     // Function to handle text typing
     const typeText = () => {
       intervalId = setInterval(() => {
-        setDisplayedText((prev) => prev + text[index - 1]); // Append characters one by one
-        index++;
-
-        if (index === text.length) {
+        if (index < text.length-1) {
+          setDisplayedText((prev) => prev + text[index]); // Append characters one by one
+          index++;
+        } else {
           clearInterval(intervalId); // Stop typing when the full text is displayed
           setTimeout(() => {
             setDisplayedText(""); // Reset the displayed text after a pause
-            index = 0; // Reset the index to start over
+            index = -1; // Reset the index to start over
             typeText(); // Restart the typing cycle
           }, pauseDuration);
         }
@@ -46,7 +46,6 @@ function Home() {
     >
       <div className="shadow-lg mb-8 py-3 h-[20%]">
         <h3 className="text-2xl mt-4 py-3 text-center font-bold reflection">
-          {/* To Do App */}
           {displayedText}
         </h3>
       </div>
@@ -65,14 +64,14 @@ function Home() {
       </div>
 
       <div className="shadow-lg mb-5 p-4 rounded-lg bg-white text-center mt-6">
-      <h4>Please sign in to enjoy<Link
-          to="login"
-          className="font-bold text-blue-500 hover:text-blue-700 underline"
-        >
-          ...
-        </Link></h4>
-        
-        
+        <h4>Please sign in to enjoy
+          <Link
+            to="login"
+            className="font-bold text-blue-500 hover:text-blue-700 underline"
+          >
+            ...
+          </Link>
+        </h4>
       </div>
     </div>
   );
