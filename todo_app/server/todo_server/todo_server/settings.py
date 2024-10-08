@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nt1wawgp!^vemd!f1%hf!u1!6)ttvupv^&sf627_sodatbw%@t'
+SECRET_KEY = 'django-insecure-9*oqtuq#571+!ww&y)5jk5_kt+o+7d_6f(o1&0)g94vlk3d@e^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'todo_app'
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,12 @@ WSGI_APPLICATION = 'todo_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'todoapp',
+        'USER': 'root',  # Add the appropriate MySQL username
+        'PASSWORD': 'Promised2024*',  # Add the appropriate MySQL password
+        'HOST': 'localhost',  # Host, default is localhost
+        'PORT': '3306',  # MySQL port, default is 3306
     }
 }
 
