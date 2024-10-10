@@ -8,4 +8,7 @@ def todo(request):
     template = loader.get_template('todoapp.html')
     return HttpResponse(template.render())
 
+def home(request):
+    return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
+    
 # Create your views here.
