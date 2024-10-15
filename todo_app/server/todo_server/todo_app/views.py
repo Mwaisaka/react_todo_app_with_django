@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.template import loader
 
 
-def todo(request):
+def main(request):
     # return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
-    template = loader.get_template('todoapp.html')
+    template = loader.get_template('main.html')
     return HttpResponse(template.render())
 
 def tasks(request):
@@ -14,6 +14,21 @@ def tasks(request):
   template = loader.get_template('tasks.html')
   context = {
     'mytasks': mytasks,
+  }
+  return HttpResponse(template.render(context, request))
+
+def details(request,id):
+  mytask = Task.objects.get(id=id)
+  template = loader.get_template('details.html')
+  context = {
+    'mytask': mytask,
+  }
+  return HttpResponse(template.render(context, request))
+
+def testing(request):
+  template = loader.get_template("template.html")
+  context = {
+    'tasks': ['Reading', 'Hiking', 'Swimming'], 
   }
   return HttpResponse(template.render(context, request))
 # def home(request):

@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>My Tasks</h1>
-
+{% extends "master.html" %}
+{% block head %}
+  My List of Tasks
+{% endblock %}
+{% block content %}
+<p><a href="/">HOME</a></p>
 <ul>
     {% for x in mytasks %}
-      <li>{{ x.task }} - {{ x.create_date }}</li>
+      <li><a href="details/{{x.id}}">{{ x.task }} - {{ x.create_date }}</a></li>
     {% endfor %}
   </ul>
 
-</body>
-</html>
+  {% endblock %}
+
+  

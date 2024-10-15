@@ -1,0 +1,17 @@
+{% extends "master.html" %} 
+
+{% block head%} 
+    Details about {{mytask.task}} 
+    {% endblock %} 
+
+{% block content%}
+<ul>
+    <li>Create Date : {{mytask.create_date}}</li>
+    <li>Completed : {{mytask.completed}}</li>
+   
+</u>
+<p>Back to <a href="/tasks">Tasks</a></p>
+
+    
+{% endblock %} 
+
