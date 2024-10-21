@@ -9,6 +9,6 @@ class Task(models.Model):
     due_date = models.DateField(null=True, blank=True)  
     
     def __str__(self):
-        return self.task
+        return f'{self.task} - {self.completed}'
 
     
