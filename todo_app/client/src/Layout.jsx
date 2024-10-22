@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer";
 
 function Layout({ user, onLogout }) {
   return (
-    <div>
+    <div style={{width:"700px"}}>
       <Header user={user} onLogout={onLogout} />
       <Outlet />
       <Footer />

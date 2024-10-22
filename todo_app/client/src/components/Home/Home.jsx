@@ -64,13 +64,14 @@ function Home() {
       </div>
 
       <div className="shadow-lg mb-5 p-4 rounded-lg bg-white text-center mt-6">
-        <h4>Please sign in to enjoy
+        <h4>Please click 
           <Link
             to="login"
-            className="font-bold text-blue-500 hover:text-blue-700 underline"
+            className="font-bold text-blue-500 hover:text-blue-700 underline mr-1 ml-1"
           >
-            ...
+            here
           </Link>
+          to sign in.
         </h4>
       </div>
     </div>

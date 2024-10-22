@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 // import { CiCirclePlus } from "react-icons/ci";
 
@@ -47,12 +46,12 @@ function ToDoForm({ addToDo }) {
 
         alert("New task added successfully.");
 
-            // Add task to the local list
-            addToDo(task);
+        // Add task to the local list
+        addToDo(task);
 
-            // Clear form after submission
-            setTask("");
-            setError("");
+        // Clear form after submission
+        setTask("");
+        setError("");
       } else {
         alert("Task addition cancelled.");
         setTask("");
@@ -68,22 +67,36 @@ function ToDoForm({ addToDo }) {
       onSubmit={handleSubmit}
       className="ToDo-Form gap-5 mb-5 flex flex-col"
     >
-      <div className="relative w-full flex items-center">
-        {/* <span className="absolute left-2 top-1/2 transform -translate-y-5 text-gray-500">
-        <CiCirclePlus size={24}/>
-        </span> */}
+      <div className="flex w-full justify-between mb-4 gap-5">
+        {/* Task Input */}
+        <div className="w-[68%] flex flex-col">
+          <label htmlFor="task" className="mb-1 font-semibold">
+            Task Name:
+          </label>
+          <input
+            type="text"
+            id="task"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            className="py-2 px-3 border border-gray-300 rounded-lg"
+            placeholder="Add a new task..."
+          />
+        </div>
 
-        <input
-          type="text"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-          className="todo-input-form flex-grow py-2 px-3 rounded-l-lg border border-gray-300"
-          placeholder="Add a new task..."
-        />
-
+        {/* Due Date Input */}
+        <div className="w-[32%] flex flex-col">
+          <label htmlFor="date" className="mb-1 font-semibold">
+            Due Date:
+          </label>
+          <input
+            type="date"
+            id="date"
+            className="py-2 px-3 border border-gray-300 rounded-lg"
+          />
+        </div>
         <button
           type="submit"
-          className="bg-orange-500 text-white font-bold py-2 px-4 rounded-r-lg hover:bg-orange-600 transition duration-300 ease-in-out"
+          className="bg-orange-500 text-white font-bold py-2 px-3 h-[30%] rounded-lg mt-8 hover:bg-orange-600 transition duration-300 ease-in-out"
         >
           Add
         </button>
