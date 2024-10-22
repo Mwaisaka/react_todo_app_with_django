@@ -8,7 +8,7 @@ function TodoList() {
     const [text, setText] = useState('');
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/tasks")
+        fetch("http://127.0.0.1:8000/tasks")
             .then((r) => r.json())
             .then(setTasks);
     }, []);
@@ -19,7 +19,7 @@ function TodoList() {
         //     text,
         //     completed: false
         // };
-        fetch("http://127.0.0.1:5555/add_task", {
+        fetch("http://127.0.0.1:8000/add_task", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -44,7 +44,7 @@ function TodoList() {
     }
 
     function deleteTask(id) {
-        fetch(`http://127.0.0.1:5555/delete_task/${id}`, {
+        fetch(`http://127.0.0.1:8000/delete_task/${id}`, {
             method: "DELETE",
         })
             .then(response => {

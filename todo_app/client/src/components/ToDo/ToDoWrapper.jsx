@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ToDoForm from "./ToDoForm";
 import { v4 as uuidv4 } from "uuid";
 import EditToDoForm from "./EditToDoForm";
@@ -9,11 +9,14 @@ import ToDoApp1 from "../Images/ToDoApp1.png";
 function ToDoWrapper({ onLogout }) {
   const [todos, setToDos] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("http://127.0.0.1:5555/tasks")
-  //     .then((res) => res.json())
-  //     .then(setToDos);
-  // }, []);
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/tasks/") 
+      .then((res) => res.json())
+      .then(setToDos);
+      
+  }, []);
+
+  console.log("Tasks", todos);
 
   const addToDo = (todo) => {
     setToDos([
@@ -30,7 +33,7 @@ function ToDoWrapper({ onLogout }) {
 
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://127.0.0.1:5555/tasks/${id}`, {
+        const response = await fetch(`http://127.0.0.1:8000/tasks/${id}`, {
           method: "DELETE",
         });
         if (response.ok) {

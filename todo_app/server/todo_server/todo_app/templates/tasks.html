@@ -4,11 +4,28 @@
 {% endblock %}
 {% block content %}
 <p><a href="/">HOME</a></p>
-<ul>
+{% comment %} <ul>
     {% for x in mytasks %}
       <li><a href="details/{{x.id}}">{{ x.task }} - {{ x.create_date }}</a></li>
     {% endfor %}
-  </ul>
+  </ul> {% endcomment %}
+
+  <table border='1'>
+      <tr>
+      <th>TASK</th>
+      <th>CREATE DATE</th>
+      <th>COMPLETED</th>
+      <th>DUE DATE</th>
+    </tr>
+    {% for x in mytasks %}  
+      <tr>        
+        <td><a href="details/{{x.id}}">{{x.task}}</a></td>        
+        <td>{{ x.create_date }}</td>
+        <td>{{ x.completed }}</td>
+        <td>{{ x.due_date }}</td>      
+      </tr>  
+    {% endfor %}
+  </table>
 
   {% endblock %}
 

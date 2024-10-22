@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Task
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
 
@@ -9,13 +9,17 @@ def main(request):
     template = loader.get_template('main.html')
     return HttpResponse(template.render())
 
+# def tasks(request):
+#   mytasks = Task.objects.all().values()
+#   template = loader.get_template('tasks.html')
+#   context = {
+#     'mytasks': mytasks,
+#   }
+#   return HttpResponse(template.render(context, request))
+
 def tasks(request):
-  mytasks = Task.objects.all().values()
-  template = loader.get_template('tasks.html')
-  context = {
-    'mytasks': mytasks,
-  }
-  return HttpResponse(template.render(context, request))
+    tasks = Task.objects.all().values()
+    return JsonResponse(list(tasks), safe=False)
 
 def details(request,id):
   mytask = Task.objects.get(id=id)
