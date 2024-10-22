@@ -8,7 +8,7 @@ function TodoList() {
     const [text, setText] = useState('');
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/tasks")
+        fetch("http://127.0.0.1:8000/tasks/")
             .then((r) => r.json())
             .then(setTasks);
     }, []);
@@ -19,7 +19,7 @@ function TodoList() {
         //     text,
         //     completed: false
         // };
-        fetch("http://127.0.0.1:8000/add_task", {
+        fetch("http://127.0.0.1:8000/tasks/add/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

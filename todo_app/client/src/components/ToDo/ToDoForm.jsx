@@ -14,36 +14,36 @@ function ToDoForm({ addToDo }) {
 
       if (confirmAdd) {
         // If user confirms, add the task
-        // fetch("http://127.0.0.1:5555/addtask", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({ task: task }),
-        // })
-        //   .then((response) => {
-        //     if (!response.ok) {
-        //       return response.json().then((errorData) => {
-        //         throw new Error(errorData.message);
-        //       });
-        //     }
-        //     return response.json();
-        //   })
-        //   .then((data) => {
-        //     console.log("Task added: ", data);
-        //     alert("New task added successfully.");
+        fetch("http://127.0.0.1:8000/tasks/add/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ task: task }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.json().then((errorData) => {
+                throw new Error(errorData.message);
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Task added: ", data);
+            alert("New task added successfully.");
 
-        //     // Add task to the local list
-        //     addToDo(task);
+            // Add task to the local list
+            addToDo(task);
 
-        //     // Clear form after submission
-        //     setTask("");
-        //     setError("");
-        //   })
-        //   .catch((error) => {
-        //     console.log("Error: ", error.message);
-        //     setError("Failed to add task: " + error.message);
-        //   });
+            // Clear form after submission
+            setTask("");
+            setError("");
+          })
+          .catch((error) => {
+            console.log("Error: ", error.message);
+            setError("Failed to add task: " + error.message);
+          });
 
         alert("New task added successfully.");
 
