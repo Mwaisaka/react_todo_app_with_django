@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 function Header({ user, onLogout }) {
     console.log("Current user state:", user);
   return (
-    <header className="shadow-none sticky z-50 top-1">
+    <header className="shadow-none sticky z-50 top-2">
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 w-full">
         <div>
           <ul className="flex flex-row gap-5 px-2 mt-2">
