@@ -7,6 +7,7 @@ import Layout from "./Layout.jsx";
 import Home from "./components/Home/Home.jsx";
 // import TodoList from "./components/ToDo/TodoList.jsx";
 import Login from "./components/Login/Login.jsx";
+import ResetPassword from "./components/Login/ResetPassword.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -41,6 +42,7 @@ function Main() {
         />
         {/* <Route path="todolist" element={<TodoList />} /> */}
         <Route path="login" element={<Login onLogin={handleLogin} />} />
+        <Route path="reset-password" element={<ResetPassword />}/>
       </Route>
     )
   );

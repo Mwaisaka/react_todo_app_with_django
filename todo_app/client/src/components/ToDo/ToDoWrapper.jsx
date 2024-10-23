@@ -107,7 +107,7 @@ function ToDoWrapper({ onLogout }) {
       }}
     >
       <div>
-        <h1 className="font-bold">MY TASKS</h1>
+        <h1 className="text-center font-bold mb-6">MY TASKS</h1>
         <ToDoForm addToDo={addToDo} />
         {/* display todos */}
         <div className="bg-gray-400 w-[100%] py-2 border rounded-lg">

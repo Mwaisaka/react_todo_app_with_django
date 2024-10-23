@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function ToDo({ task, deleteTodo, editTodo, toggleComplete }) {
   return (
-    <div className="ToDo flex items-center justify-between mb-4 transform transition duration-300 ease-in-out hover:scale-105 bg-red-100 rounded-lg p-2">
+    <div className="ToDo flex items-center justify-between mb-4 mt-2 h-10 transform transition duration-300 ease-in-out hover:scale-105 bg-red-100 rounded-lg px-2">
       <div className="flex items-center w-full">
         <input
           type="checkbox"

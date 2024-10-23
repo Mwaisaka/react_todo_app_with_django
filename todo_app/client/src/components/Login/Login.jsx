@@ -51,7 +51,7 @@
 //     //   .catch((error) => {
 //     //     setError(error.message);
 //     //   });
-    
+
 //   }
 
 //   const formSchema = yup.object().shape({
@@ -345,7 +345,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ToDoApp1 from "../Images/ToDoApp1.png";
 
 export default function Login({ onLogin }) {
@@ -484,6 +484,17 @@ export default function Login({ onLogin }) {
               >
                 {formik.isSubmitting ? "Logging in..." : "Login"}
               </button>
+              <div className="button-group mt-6 text-center">
+                <Link to="/reset-password" className="forgot-password">
+                  Forgot your Password?
+                </Link>
+              </div>
+            </div>
+            <div className="button-group mt-6 text-center">
+              <p>
+                Don't have an account? Click 
+                <Link to="/user-registration" className="text-blue-500 hover:underline mr-1 ml-1">here </Link>to sign up...
+              </p>
             </div>
           </form>
         </div>
@@ -491,4 +502,3 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
-

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ToDoApp1 from "../Images/ToDoApp1.png";
+import ToDoApp4 from "../Images/ToDoApp4.png";
 
 function Home() {
-  const [displayedText, setDisplayedText] = useState("");
+  const [displayedText, setDisplayedText] = useState("To Do App");
   const text = "To Do App"; // The full text to display
   const speed = 350; // Speed of typing (in milliseconds)
   const pauseDuration = 2500; // Pause before the cycle starts again
@@ -29,7 +30,7 @@ function Home() {
       }, speed);
     };
 
-    typeText(); // Start the typing effect
+    // typeText(); // Start the typing effect
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []); // Empty dependency array to run effect only once
@@ -44,14 +45,24 @@ function Home() {
         backgroundRepeat: "no-repeat", // Prevent tiling
       }}
     >
-      <div className="shadow-lg mb-8 py-3 h-[20%]">
-        <h3 className="text-2xl mt-4 py-3 text-center font-bold reflection">
+      <div className="shadow-lg mb-8 py-3 h-[10%] rounded-lg bg-gray-100">
+        <h2 className="text-3xl mt-2 py-2 text-center font-bold reflection">
           {displayedText}
-        </h3>
+          <hr
+              className="border-t-2 border-red-700 mb-1 py-1"
+              style={{ width: "20%", margin: "15px auto" }}
+            />
+        </h2>
       </div>
-
       {/* Other content */}
-      <div className="shadow-lg mb-5 p-4 rounded-lg bg-white">
+      <div className="shadow-lg mb-5 p-4 rounded-lg bg-white"
+      style={{
+        backgroundImage: `url(${ToDoApp4})`,
+        backgroundSize: "cover", // Cover the entire area
+        backgroundPosition: "center", // Center the image
+        backgroundRepeat: "no-repeat", // Prevent tiling
+      }}
+      >
         <h4 className="py-4 text-gray-700">This App will help you to...</h4>
         <ul className="list-disc ml-8 space-y-2 text-gray-700">
           <li>Establish and act toward achieving goals</li>
