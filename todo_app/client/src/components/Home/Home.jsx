@@ -45,7 +45,7 @@ function Home() {
         backgroundRepeat: "no-repeat", // Prevent tiling
       }}
     >
-      <div className="shadow-none mb-8 py-3 h-[10%] rounded-lg">
+      <div className="bg-gray-100 shadow-none mb-8 py-3 h-[10%] rounded-lg">
         <h2 className="text-3xl mt-2 py-2 text-center font-bold reflection">
           {displayedText}
           <hr

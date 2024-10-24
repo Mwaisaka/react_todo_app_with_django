@@ -62,7 +62,7 @@ export default function ResetPassword() {
 
   return (
     <div
-      className="pt-1 px-12 py-6 mt-4 mb-4"
+      className="pt-1 px-16 py-6 mt-4 mb-4"
       style={{
         backgroundImage: `url(${ToDoApp1})`,
         backgroundSize: "cover", // Cover the entire area
@@ -78,7 +78,7 @@ export default function ResetPassword() {
           width: "100%",
         }}
       >
-        <div className="bg-gray-100 py-3">
+        <div className="bg-gray-100 py-3 px-10">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
             Reset Password
             <hr
