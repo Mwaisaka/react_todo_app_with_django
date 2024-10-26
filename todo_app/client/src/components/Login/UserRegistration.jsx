@@ -115,9 +115,6 @@ export default function Registration({ onLogin, user }) {
       username: "",
       fullname: "",
       email: "",
-      id_number: "",
-      gender: "",
-      phone_number: "",
       password: "",
       confirm_password: "",
     },
@@ -249,65 +246,7 @@ export default function Registration({ onLogin, user }) {
                 </div>
               )}
             </div>
-            <div className="form-group flex flex-col mb-4">
-              <label htmlFor="id_number" className="form-label mb-2 text-left">
-                ID Number:
-              </label>
-              <input
-                id="id_number"
-                name="id_number"
-                type="text"
-                value={formik.values.id_number}
-                onChange={formik.handleChange}
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-               {formik.touched.id_number && formik.errors.id_number && (
-                <div className="error-message text-red-500 mt-2">
-                  {formik.errors.id_number}
-                </div>
-              )}
-            </div>
-            <div className="form-group flex flex-col mb-4">
-              <label htmlFor="gender" className="form-label mb-2 text-left">
-                Gender:
-              </label>
-              <input
-                id="gender"
-                name="gender"
-                type="text"
-                placeholder="male/female"
-                value={formik.values.gender}
-                onChange={formik.handleChange}
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-              {formik.touched.gender && formik.errors.gender && (
-                <div className="error-message text-red-500 mt-2">
-                  {formik.errors.gender}
-                </div>
-              )}
-            </div>
-            <div className="form-group flex flex-col mb-4">
-              <label
-                htmlFor="phone_number"
-                className="form-label mb-2 text-left"
-              >
-                Phone Number:
-              </label>
-              <input
-                id="phone_number"
-                name="phone_number"
-                type="text"
-                placeholder="+254*********"
-                value={formik.values.phone_number}
-                onChange={formik.handleChange}
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-              {formik.touched.phone_number && formik.errors.phone_number && (
-                <div className="error-message text-red-500 mt-2">
-                  {formik.errors.phone_number}
-                </div>
-              )}
-            </div>
+            
             <div className="form-group flex flex-col mb-4">
               <label htmlFor="password" className="form-label mb-2 text-left">
                 Password:
