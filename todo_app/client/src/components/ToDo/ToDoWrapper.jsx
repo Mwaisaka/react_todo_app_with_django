@@ -10,10 +10,9 @@ function ToDoWrapper({ onLogout }) {
   const [todos, setToDos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/tasks/") 
+    fetch("http://127.0.0.1:8000/tasks/")
       .then((res) => res.json())
       .then(setToDos);
-      
   }, []);
 
   console.log("Tasks", todos);
@@ -33,9 +32,12 @@ function ToDoWrapper({ onLogout }) {
 
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/tasks/${id}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://127.0.0.1:8000/tasks/delete/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
         if (response.ok) {
           setToDos(todos.filter((todo) => todo.id !== id));
           alert("Task deleted successfully");
@@ -53,12 +55,36 @@ function ToDoWrapper({ onLogout }) {
     }
   };
 
-  const toggleComplete = (id) => {
-    setToDos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+  const toggleComplete = async (id) => {
+    // Find the task to toggle
+    const taskToToggle = todos.find((todo) => todo.id === id);
+    if (!taskToToggle) return;
+
+    const updatedCompletionStatus = !taskToToggle.completed;
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/tasks/edit/${id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed: updatedCompletionStatus }),
+      });
+
+      if (response.ok) {
+        const updatedTask = await response.json();
+        setToDos(
+          todos.map((todo) =>
+            todo.id === id ? { ...todo, ...updatedTask } : todo
+          )
+        );
+      } else {
+        throw new Error("Failed to update completion status");
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("There was an error updating the completion status.");
+    }
   };
 
   const editTodo = (id) => {
@@ -69,13 +95,34 @@ function ToDoWrapper({ onLogout }) {
     );
   };
 
-  const editTask = (task, id) => {
-    setToDos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, task, isEditing: !todo.isEditing } : todo
-      )
-    );
+  const editTask = async ({ task, dueDate }, id) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/tasks/edit/${id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ task, due_date: dueDate }), // Send only the updated task name
+      });
+
+      if (response.ok) {
+        const updatedTask = await response.json();
+        setToDos(
+          todos.map((todo) =>
+            todo.id === id
+              ? { ...todo, ...updatedTask, isEditing: false }
+              : todo
+          )
+        );
+      } else {
+        throw new Error("Failed to edit task");
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert("There was an error saving the task edit.");
+    }
   };
+
   const clearTasks = () => {
     const confirmClear = window.confirm(
       "Are you sure you want to clear all tasks?"
@@ -117,7 +164,7 @@ function ToDoWrapper({ onLogout }) {
               className="transform transition duration-300 ease-in-out hover:scale-110"
               onClick={clearTasks}
             >
-              Clear all tasks
+              {/* Clear all tasks */}
             </button>
           </div>
 
@@ -162,29 +209,7 @@ function ToDoWrapper({ onLogout }) {
           ) : (
             <p className="ml-4 text-gray-600">No completed tasks</p>
           )}
-
-          {/* {todos.map((todo) =>
-            todo.isEditing ? (
-              <EditToDoForm key={todo.id} editToDo={editTask} task={todo} />
-            ) : (
-              <ToDo
-                key={todo.id}
-                task={todo}
-                deleteTodo={deleteTodo}
-                editTodo={editTodo}
-                toggleComplete={toggleComplete}
-              />
-            )
-          )} */}
         </div>
-
-        {/* <button
-          type="submit"
-          onClick={onLogout}
-          className="bg-orange-500 text-white font-bold mt-2 py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300 ease-in-out"
-        >
-          Sign out
-        </button> */}
       </div>
     </div>
   );

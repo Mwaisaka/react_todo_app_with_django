@@ -54,7 +54,7 @@ h1 {
   width: 100% !important;  
   color: #000;
   border-radius: 8px !important;
-  padding-left: 3rem;
+  padding-left: 1rem;
 }
 
 .todo-input-form::placeholder {

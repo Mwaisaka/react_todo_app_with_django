@@ -3,12 +3,13 @@ import React, { useState } from "react";
 
 function ToDoForm({ addToDo }) {
   const [task, setTask] = useState("");
+  const [due_date, setDue_date]=useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (task.trim()) {
+    if (task.trim()&& due_date) {
       const confirmAdd = window.confirm("Do you want to add this new task?");
 
       if (confirmAdd) {
@@ -18,7 +19,7 @@ function ToDoForm({ addToDo }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ task: task }),
+          body: JSON.stringify({ task,due_date }),
         })
           .then((response) => {
             if (!response.ok) {
@@ -33,10 +34,11 @@ function ToDoForm({ addToDo }) {
             alert("New task added successfully.");
 
             // Add task to the local list
-            addToDo(task);
+            addToDo(data.task, data.due_date );
 
             // Clear form after submission
             setTask("");
+            setDue_date("");
             setError("");
           })
           .catch((error) => {
@@ -44,21 +46,21 @@ function ToDoForm({ addToDo }) {
             setError("Failed to add task: " + error.message);
           });
 
-        alert("New task added successfully.");
-
         // Add task to the local list
         addToDo(task);
 
         // Clear form after submission
         setTask("");
+        setDue_date("");
         setError("");
       } else {
         alert("Task addition cancelled.");
         setTask("");
+        setDue_date("");
         setError("");
       }
     } else {
-      setError("Please enter a task in the above field.");
+      setError("Please enter both a task and a due date in the above fields.");
     }
   };
 
@@ -91,6 +93,8 @@ function ToDoForm({ addToDo }) {
           <input
             type="date"
             id="date"
+            value={due_date}
+            onChange={(e) => setDue_date(e.target.value)}
             className="py-2 px-3 border border-gray-300 rounded-lg"
           />
         </div>

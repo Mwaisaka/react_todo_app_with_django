@@ -5,6 +5,27 @@ function TodoItem({ task, deleteTask, toggleCompleted }) {
 
     function handleChange() {
         toggleCompleted(task.id);
+
+        // Send updated status to the backend
+    fetch(`http://127.0.0.1:8000/tasks/${task.id}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed: !task.completed }), // Toggle completed status
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update task status");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Task status updated:", data);
+        })
+        .catch((error) => {
+          console.error("Error updating task status:", error);
+        });
     }
 
     return (
