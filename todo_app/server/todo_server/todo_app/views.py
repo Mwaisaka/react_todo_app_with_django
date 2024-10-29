@@ -40,8 +40,8 @@ def tasks(request):
 #     'tasks': ['Reading', 'Hiking', 'Swimming'], 
 #   }
 #   return HttpResponse(template.render(context, request))
-# def home(request):
-#     return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
+def home(request):
+    return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
     
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def add_task(request):
