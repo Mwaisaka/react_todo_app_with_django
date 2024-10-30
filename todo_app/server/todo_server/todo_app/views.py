@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Task
+from .models import Task, Subscriber
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
