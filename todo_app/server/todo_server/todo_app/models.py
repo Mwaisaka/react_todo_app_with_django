@@ -17,6 +17,7 @@ class Subscriber(models.Model):
     username = models.CharField(max_length=255, unique=True)
     fullname = models.CharField(max_length=255)
     email=models.EmailField(max_length=255, unique=True)
+    create_date = models.DateField(null=False, blank=True, default=now)
     password = models.CharField(max_length=255)  # Store hashed password here
     
     def save(self, *args, **kwargs):
