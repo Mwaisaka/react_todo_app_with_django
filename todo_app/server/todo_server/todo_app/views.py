@@ -10,7 +10,7 @@ from datetime import datetime
 # Create your views here.
 
 def main(request):
-    return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
+    # return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
     template = loader.get_template('main.html')
     return HttpResponse(template.render())
 
