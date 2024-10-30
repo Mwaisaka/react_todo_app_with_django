@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ToDoApp from "../Images/ToDoApp4.png";
+// import ToDoApp from "../Images/ToDoApp4.png";
 
 function Header({ user, onLogout }) {
   console.log("Current user state:", user);

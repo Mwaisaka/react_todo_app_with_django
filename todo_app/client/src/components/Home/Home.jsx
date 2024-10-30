@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Link } from "react-router-dom";
 import ToDoApp1 from "../Images/ToDoApp1.png";
 import ToDoApp4 from "../Images/ToDoApp4.png";
 
 function Home() {
-  const [displayedText, setDisplayedText] = useState("To Do App");
-  const text = "To Do App"; // The full text to display
-  const speed = 350; // Speed of typing (in milliseconds)
-  const pauseDuration = 2500; // Pause before the cycle starts again
+  // const [displayedText, setDisplayedText] = useState("To Do App");
+  // const text = "To Do App"; // The full text to display
+  // const speed = 350; // Speed of typing (in milliseconds)
+  // const pauseDuration = 2500; // Pause before the cycle starts again
 
   useEffect(() => {
-    let index = 0;
+    // let index = 0;
     let intervalId = null;
 
     // Function to handle text typing
-    const typeText = () => {
-      intervalId = setInterval(() => {
-        if (index < text.length-1) {
-          setDisplayedText((prev) => prev + text[index]); // Append characters one by one
-          index++;
-        } else {
-          clearInterval(intervalId); // Stop typing when the full text is displayed
-          setTimeout(() => {
-            setDisplayedText(""); // Reset the displayed text after a pause
-            index = -1; // Reset the index to start over
-            typeText(); // Restart the typing cycle
-          }, pauseDuration);
-        }
-      }, speed);
-    };
+    // const typeText = () => {
+    //   intervalId = setInterval(() => {
+    //     if (index < text.length-1) {
+    //       setDisplayedText((prev) => prev + text[index]); // Append characters one by one
+    //       index++;
+    //     } else {
+    //       clearInterval(intervalId); // Stop typing when the full text is displayed
+    //       setTimeout(() => {
+    //         setDisplayedText(""); // Reset the displayed text after a pause
+    //         index = -1; // Reset the index to start over
+    //         typeText(); // Restart the typing cycle
+    //       }, pauseDuration);
+    //     }
+    //   }, speed);
+    // };
 
     // typeText(); // Start the typing effect
 
@@ -47,7 +47,7 @@ function Home() {
     >
       <div className="bg-gray-100 shadow-none mb-8 py-3 h-[10%] rounded-lg">
         <h2 className="text-3xl mt-2 py-2 text-center font-bold reflection">
-          {displayedText}
+        To Do App
           <hr
               className="border-t-2 border-red-700 mb-1 py-1"
               style={{ width: "20%", margin: "15px auto" }}
