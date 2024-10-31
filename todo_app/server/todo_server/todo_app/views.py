@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
 from datetime import datetime
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -25,6 +26,10 @@ def tasks(request):
 def tasks(request):
     tasks = Task.objects.all().values()
     return JsonResponse(list(tasks), safe=False)
+  
+def subscribers(request):
+    subscribers = Subscriber.objects.all().values()
+    return JsonResponse(list(subscribers), safe=False)
 
 def details(request,id):
   mytask = Task.objects.get(id=id)
@@ -122,3 +127,43 @@ def edit_task(request, id):
       return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
   else:
     return JsonResponse({'error': 'PUT request required'}, status=405)
+  
+@csrf_exempt  # Disable CSRF for this endpoint (not recommended for production without extra security)
+def add_subscriber(request):
+  if request.method == 'POST':
+    try:
+      # Pass JSON data from request
+      data=json.loads(request.body)
+      username = data.get("username")
+      fullname = data.get("fullname")
+      email = data.get("email")
+      password = data.get("password")
+      
+      # Validate required fields
+      if not all([username, fullname, email, password]):
+          return JsonResponse({"error": "All fields are required"}, status=400)
+        
+      # Create a new subscriber
+      new_subscriber=Subscriber(
+        username=username, 
+        fullname=fullname,
+        email=email, 
+        password=make_password(password), #Hash the password
+      )
+      
+      new_subscriber.save()
+      
+      # Return the new subscriber
+      return JsonResponse(
+        {
+          "id": new_subscriber.id,
+          "username":new_subscriber.username,
+          "email":new_subscriber.email,
+          'create_date': new_subscriber.create_date.strftime('%Y-%m-%d'),
+          },status=201)
+    except json.JSONDecodeError:
+      return JsonResponse({"error":"Invalid JSOn payload"},status=400)
+    except Exception as e:
+      return JsonResponse({"error":str(e)},status=500)
+  else:
+    return JsonResponse({"error":"Post request required"},status=405)
