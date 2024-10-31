@@ -8,6 +8,6 @@ class TaskAdmin(admin.ModelAdmin):
 admin.site.register(Task, TaskAdmin)
 
 class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ("username","fullname","email","create_date","password",)
+    list_display = ("username","fullname","email","create_date",)
 
 admin.site.register(Subscriber, SubscriberAdmin)

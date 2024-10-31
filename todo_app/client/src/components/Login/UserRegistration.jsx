@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import ToDoApp1 from "../Images/ToDoApp1.png";
-// import "./Login.css";
 
 export default function Registration({ onLogin, user }) {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
-  const [refreshPage, setRefreshPage] = useState(false);
   const [error, setError] = useState(null);
-  const [setSuccess, setSetSuccess] = useState(false);
-  const [showErrors, setShowErrors] = useState(false); // State to control when to show errors
-
-  // useEffect(() => {
-  //   console.log("FETCH!");
-  //   fetch("/users")
-  //     .then((res) => res.json())
-  //     .then((users) => {
-  //       setUsers(users);
-  //       console.log(users);
-  //     });
-  // }, [refreshPage]);
+  const [success, setSuccess] = useState(false);
 
   const formSchema = yup.object().shape({
     username: yup
@@ -36,9 +22,6 @@ export default function Registration({ onLogin, user }) {
       .test("valid-email", "Email must contain @ character", function (value) {
         return value && value.includes("@");
       }),
-    id_number: yup.string().required("Id Number is required"),
-    gender: yup.string().required("Gender is required"),
-    phone_number: yup.string().required("Phone Number is required"),
     password: yup
       .string()
       .required("Password is required")
@@ -49,67 +32,6 @@ export default function Registration({ onLogin, user }) {
       .required("Confirm Password is required"),
   });
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setShowErrors(true); // Set showErrors to true when the register button is clicked
-  //   const formHasErrors = Object.keys(formik.errors).length > 0;
-  //   if (formHasErrors) {
-  //     // If there are form errors, prevent form submission
-  //     return;
-  //   }
-
-  //   fetch("http://127.0.0.1:5555/signup", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username: formik.values.username,
-  //       fullname: formik.values.fullname,
-  //       email: formik.values.email,
-  //       id_number: formik.values.id_number,
-  //       gender: formik.values.gender,
-  //       phone_number: formik.values.phone_number,
-  //       password: formik.values.password,
-  //       confirm_password: formik.values.confirm_password,
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       if (response.status === 500) {
-  //         throw new Error("User already exists.");
-  //       }
-  //       if (!response.ok) {
-  //         throw new Error("Failed to register user.");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((user) => {
-  //       navigate("/login");
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //       if (error.message === "User already exists.") {
-  //         // Display specific message for existing user
-  //         setError("User already exists. Please choose a different username.");
-  //       }
-  //     });
-  // }
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     username: "",
-  //     fullname: "",
-  //     email: "",
-  //     id_number: "",
-  //     gender: "",
-  //     phone_number: "",
-  //     password: "",
-  //     confirm_password: "",
-  //   },
-  //   validationSchema: formSchema,
-  //   onSubmit: handleSubmit,
-  // });
-
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -119,13 +41,20 @@ export default function Registration({ onLogin, user }) {
       confirm_password: "",
     },
     validationSchema: formSchema,
-    onSubmit: (values) => {
-      fetch("http://127.0.0.1:5555/user-registration", {
-        method: "PATCH",
+    onSubmit: () => {
+      fetch("http://127.0.0.1:8000/add_subscriber/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(formik.values),
+        // body: JSON.stringify({
+        //           username: formik.values.username,
+        //           fullname: formik.values.fullname,
+        //           email: formik.values.email,
+        //           password: formik.values.password,
+        //           confirm_password: formik.values.confirm_password,
+        //         }),
       })
         .then((response) => {
           if (response.status === 500) {
@@ -137,12 +66,14 @@ export default function Registration({ onLogin, user }) {
           return response.json();
         })
         .then((user) => {
-          navigate("/login");
+          // setSuccess(true);
+          // navigate("/login");
+          setSuccess(true); // Display success message
+          setTimeout(() => navigate("/login"), 2000); // Delay navigation by 1.5 seconds
         })
         .catch((error) => {
           setError(error.message);
           if (error.message === "User already exists.") {
-            // Display specific message for existing user
             setError(
               "User already exists. Please choose a different username."
             );
@@ -156,9 +87,9 @@ export default function Registration({ onLogin, user }) {
       className="pt-1 px-16 py-6 mt-4 mb-4"
       style={{
         backgroundImage: `url(${ToDoApp1})`,
-        backgroundSize: "cover", // Cover the entire area
-        backgroundPosition: "center", // Center the image
-        backgroundRepeat: "no-repeat", // Prevent tiling
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <div
@@ -240,13 +171,12 @@ export default function Registration({ onLogin, user }) {
                 onChange={formik.handleChange}
                 className="w-full border border-gray-300 rounded-md p-2"
               />
-             {formik.touched.email && formik.errors.email && (
+              {formik.touched.email && formik.errors.email && (
                 <div className="error-message text-red-500 mt-2">
                   {formik.errors.email}
                 </div>
               )}
             </div>
-            
             <div className="form-group flex flex-col mb-4">
               <label htmlFor="password" className="form-label mb-2 text-left">
                 Password:
@@ -259,7 +189,7 @@ export default function Registration({ onLogin, user }) {
                 value={formik.values.password}
                 className="w-full border border-gray-300 rounded-md p-2"
               />
-             {formik.touched.password && formik.errors.password && (
+              {formik.touched.password && formik.errors.password && (
                 <div className="error-message text-red-500 mt-2">
                   {formik.errors.password}
                 </div>
@@ -280,19 +210,23 @@ export default function Registration({ onLogin, user }) {
                 value={formik.values.confirm_password}
                 className="w-full border border-gray-300 rounded-md p-2"
               />
-              {formik.touched.confirm_password && formik.errors.confirm_password && (
-                <div className="error-message text-red-500 mt-2">
-                  {formik.errors.confirm_password}
-                </div>
-              )}
+              {formik.touched.confirm_password &&
+                formik.errors.confirm_password && (
+                  <div className="error-message text-red-500 mt-2">
+                    {formik.errors.confirm_password}
+                  </div>
+                )}
             </div>
             {error && <p className="error-message">{error}</p>} <br />
-            {setSuccess && <div>User has been set up successfully!</div>}
+            {success && (
+              <div className="success-message text-green-500 mb-1">
+                User has been set up successfully!
+              </div>
+            )}
             <div>
               <button
                 type="submit"
-                // className="submit-button"
-                className="bg-blue-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
+                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
               >
                 Register
               </button>
