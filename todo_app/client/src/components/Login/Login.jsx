@@ -371,20 +371,37 @@ export default function Login({ onLogin }) {
     },
     validationSchema: formSchema,
     onSubmit: (values, { setSubmitting }) => {
-      // Simulate a successful login without calling the backend
-      const mockUser = { username: "mwaisaka", password: "123456" };
+      
+      fetch("http://127.0.0.1:8000/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 400) {
+              throw new Error("Both username and password are required.");
+            } else {
+              throw new Error("Invalid username or password.");
+            }
+          }
+          return response.json();
+        })
+        .then((user) => {
+          onLogin(user); // Call the onLogin prop with the user data
+          navigate("/todo"); // Navigate to the ToDo page on success
+          // setRefreshPage(!refreshPage); // Trigger a re-fetch if needed
+        })
+        .catch((err) => {
+          setError(err.message); // Set error message if login fails
+        })
+        .finally(() => {
+          setSubmitting(false); // Re-enable the form submission button
+        });
 
-      if (
-        values.username === mockUser.username &&
-        values.password === mockUser.password
-      ) {
-        onLogin(mockUser); // Trigger the onLogin prop to handle login
-        navigate("/todo"); // Redirect to the ToDo page
-      } else {
-        setError("Invalid username or password."); // Display error if login fails
-      }
-
-      setSubmitting(false); // Re-enable the form submission button
+      // setSubmitting(false); // Re-enable the form submission button
     },
   });
 
