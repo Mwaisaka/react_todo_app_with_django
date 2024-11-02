@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 import json
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
@@ -161,6 +162,45 @@ def add_subscriber(request):
           "email":new_subscriber.email,
           'create_date': new_subscriber.create_date.strftime('%Y-%m-%d'),
           },status=201)
+    except json.JSONDecodeError:
+      return JsonResponse({"error":"Invalid JSOn payload"},status=400)
+    except Exception as e:
+      return JsonResponse({"error":str(e)},status=500)
+  else:
+    return JsonResponse({"error":"Post request required"},status=405)
+  
+@csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
+def login(request):
+  if request.method == 'POST':
+    try:
+      # Parse JSON data from the request body
+      data=json.loads(request.body)
+      username = data.get("username")
+      password = data.get("password")
+      
+      # Validate required fields
+      if not all([username, password]):
+          return JsonResponse({"error": "All fields are required"}, status=400)
+      
+      # Check if the user exists
+      subscriber_exists = Subscriber.objects.filter(username=username).exists()
+      if not subscriber_exists:
+          return JsonResponse({"error": "Invalid username or password"}, status=401)
+      # Authenticate user
+      subscriber = authenticate(username=username, password=password)
+      
+      if subscriber is not None:
+        # Sucessfully authenticated
+        return JsonResponse({
+          'message': "Login successful",
+          'subscriber': {
+            'id': subscriber.id,
+            'username': subscriber.username,
+          }
+        }, status=200)
+      else:
+        # Incorrect username or password
+        return JsonResponse({"error": "Invalid username or password"}, status=401)
     except json.JSONDecodeError:
       return JsonResponse({"error":"Invalid JSOn payload"},status=400)
     except Exception as e:
