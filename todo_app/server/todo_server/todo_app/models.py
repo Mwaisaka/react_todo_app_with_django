@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
 class Task(models.Model):
@@ -19,6 +19,7 @@ class SubscriberManager(BaseUserManager):
             raise ValueError('The Username field must be set')
         user = self.model(username=username, **extra_fields)
         user.set_password(password)  # Use set_password to hash the password
+        print("Hashed password:", user.password)  # Debugging line to check hash
         user.save(using=self._db)
         return user
 
@@ -36,7 +37,7 @@ class Subscriber(AbstractBaseUser, PermissionsMixin):
     fullname = models.CharField(max_length=255)
     email=models.EmailField(max_length=255, unique=True)
     create_date = models.DateField(null=False, blank=True, default=now)
-    password = models.CharField(max_length=255)  # Store hashed password here
+    # password = models.CharField(max_length=255)  # Store hashed password here
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     
@@ -46,8 +47,8 @@ class Subscriber(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'fullname']  # Fields required when creating a user
     
     def save(self, *args, **kwargs):
-        if not self.pk:  # Only hash the password if it's a new object
-            self.password = make_password(self.password)
+        # if not self.pk:  # Only hash the password if it's a new object
+        #     self.password = make_password(self.password)
         super().save(*args, **kwargs)
         
     # groups = models.ManyToManyField(

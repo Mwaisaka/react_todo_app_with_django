@@ -145,11 +145,11 @@ def add_subscriber(request):
           return JsonResponse({"error": "All fields are required"}, status=400)
         
       # Create a new subscriber
-      new_subscriber=Subscriber(
+      new_subscriber=Subscriber.objects.create_user(
         username=username, 
         fullname=fullname,
         email=email, 
-        password=make_password(password), #Hash the password
+        password=password, #Hash the password
       )
       
       new_subscriber.save()
