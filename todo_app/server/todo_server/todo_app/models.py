@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
 
 # Create your models here.
 class Task(models.Model):
@@ -49,6 +49,17 @@ class Subscriber(AbstractBaseUser, PermissionsMixin):
         if not self.pk:  # Only hash the password if it's a new object
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
+        
+    # groups = models.ManyToManyField(
+    #     Group,
+    #     related_name="subscriber_set",  # Unique related name
+    #     blank=True,
+    # )
+    # user_permissions = models.ManyToManyField(
+    #     Permission,
+    #     related_name="subscriber_permissions",  # Unique related name
+    #     blank=True,
+    # )
 
     def __str__(self):
         return f'{self.username} - {self.email}'
