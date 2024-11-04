@@ -207,3 +207,16 @@ def login(request):
       return JsonResponse({"error":str(e)},status=500)
   else:
     return JsonResponse({"error":"Post request required"},status=405)
+  
+@csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
+def delete_subscriber(request,id):
+  if request.method =="DELETE":
+    try:
+      # Try to get a subscriber by id and delete it
+      subscriber=get_object_or_404(Subscriber,id=id)
+      subscriber.delete()
+      return JsonResponse({"mesage":"Subscriber deleted successfully"}, status=200)
+    except Subscriber.DoesNotExist:
+      return JsonResponse({"error":"Subscriber does not exist"}, status=404)
+  else:
+    return JsonResponse({"error":"Delete request required"}, status=405)
