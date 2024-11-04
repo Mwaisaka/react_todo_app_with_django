@@ -36,8 +36,8 @@ export default function ResetPassword() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("http://127.0.0.1:5555/reset_password", {
-        method: "PATCH",
+      fetch("http://127.0.0.1:8000/reset_password/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

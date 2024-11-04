@@ -220,3 +220,40 @@ def delete_subscriber(request,id):
       return JsonResponse({"error":"Subscriber does not exist"}, status=404)
   else:
     return JsonResponse({"error":"Delete request required"}, status=405)
+
+@csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
+def reset_password(request):
+    if request.method == 'POST':
+      try:
+        # Pass json data from the request
+        data=json.loads(request.body)
+        email=data.get('email')
+        new_password=data.get('new_password')
+        confirm_new_password=data.get('confirm_new_password')
+        
+        # Validate required fileds
+        if not all([email,new_password,confirm_new_password]):
+          return JsonResponse({"error":"All fields are required"}, status=400)
+        
+        # Check if new password and confirm_new_password match
+        if new_password != confirm_new_password:
+          return JsonResponse({"error":"Passwords do not match"}, status=400)
+        
+        # Get the subscriber by email address
+        try:
+          subscriber = Subscriber.objects.get(email=email)
+        except Subscriber.DoesNotExist:
+          return JsonResponse({"error":"User with this email does not exist"}, status=404)
+        
+        # Update the password
+        subscriber.password = make_password(new_password)
+        subscriber.save()
+        
+        return JsonResponse({"success": "Password reset successfully"}, status=200)
+      
+      except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON payload"}, status=400)
+      except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    else:
+      return JsonResponse({"error": "POST request required"}, status=405)

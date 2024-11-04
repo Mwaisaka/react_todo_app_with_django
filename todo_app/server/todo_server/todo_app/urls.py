@@ -14,4 +14,5 @@ urlpatterns = [
     path("add_subscriber/", views.add_subscriber, name="add_subscriber"),
     path('login/', views.login, name="login"),
     path('subscribers/delete/<int:id>/', views.delete_subscriber, name='delete_subscriber'),
+    path('reset_password/', views.reset_password, name='reset_password'),
 ]
