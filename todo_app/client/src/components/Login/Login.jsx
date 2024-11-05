@@ -370,14 +370,14 @@ export default function Login({ onLogin }) {
       password: "",
     },
     validationSchema: formSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: ({username,password}, { setSubmitting }) => {
       
       fetch("http://127.0.0.1:8000/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({username,password}),
       })
         .then((response) => {
           if (!response.ok) {
@@ -389,8 +389,9 @@ export default function Login({ onLogin }) {
           }
           return response.json();
         })
-        .then((user) => {
-          onLogin(user); // Call the onLogin prop with the user data
+        .then((userData) => {
+          onLogin(userData); // Call the onLogin prop with the user data
+          console.log("Current user logged in:", userData);
           navigate("/todo"); // Navigate to the ToDo page on success
           // setRefreshPage(!refreshPage); // Trigger a re-fetch if needed
         })

@@ -19,6 +19,7 @@ function ToDoForm({ addToDo }) {
           headers: {
             "Content-Type": "application/json",
           },
+          
           body: JSON.stringify({ task,due_date }),
         })
           .then((response) => {

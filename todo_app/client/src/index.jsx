@@ -22,9 +22,9 @@ function Main() {
   // const navigate = useNavigate();
 
   // Handle login
-  const handleLogin = (user) => {
-    setUser(user);
-    console.log("User logged in successfully:", user);
+  const handleLogin = (userData) => {
+    setUser(userData);
+    console.log("User logged in successfully:", userData);
   };
 
   // Handle logout
