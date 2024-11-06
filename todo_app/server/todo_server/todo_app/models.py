@@ -9,7 +9,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     create_date = models.DateField(null=False, blank=True, default=now)
     due_date = models.DateField(null=True, blank=True)  
-    # user = models.ForeignKey('Subscriber', on_delete=models.CASCADE, related_name='tasks', null=True)  # Link each task to a subscribe
+    user = models.ForeignKey('Subscriber', on_delete=models.CASCADE, related_name='tasks', null=True)  # Link each task to a subscribe
     
     def __str__(self):
         return f'{self.task} - {self.completed}'

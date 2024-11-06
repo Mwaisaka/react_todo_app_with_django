@@ -8,6 +8,9 @@ import json
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login as django_login
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your views here.
 
@@ -48,7 +51,8 @@ def testing(request):
   return HttpResponse(template.render(context, request))
 def home(request):
     return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
-    
+
+@login_required
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def add_task(request):
   if request.method=="POST":
@@ -58,11 +62,21 @@ def add_task(request):
       due_date_str = data.get("due_date") # Capture due date from the payload
       
       if task_name:
+        
+        # Normalize task name (strip leading/trailing spaces and lowercase)
+          task_name = task_name.strip().lower()
+          
+        # Check if the task already exists for the user (same task name and user)
+          existing_task = Task.objects.filter(task=task_name, user_id=request.user.id).first()
+          
+          if existing_task:
+              return JsonResponse({'error': 'Task with the same name already exists'}, status=400)
+          
           due_date = (
                     datetime.strptime(due_date_str, '%Y-%m-%d') if due_date_str else None
                 )
         # Create a new task
-          new_task = Task(task=task_name, completed=False, due_date=due_date)
+          new_task = Task(task=task_name, completed=False, due_date=due_date, user_id=request.user.id)
           new_task.save()
           
           # Return the newly created task as JSON response
@@ -180,19 +194,29 @@ def login(request):
       
       # Validate required fields
       if not all([username, password]):
-          return JsonResponse({"error": "All fields are required"}, status=400)
+          return JsonResponse({"error": "Username and password are required"}, status=400)
       
       # Check if the user exists
-      subscriber_exists = Subscriber.objects.filter(username=username).exists()
-      if not subscriber_exists:
-          return JsonResponse({"error": "Invalid username or password"}, status=401)
+      # subscriber_exists = Subscriber.objects.filter(username=username).exists()
+      # if not subscriber_exists:
+      #     return JsonResponse({"error": "Invalid username or password"}, status=401)
+        
       # Authenticate user
-      subscriber = authenticate(username=username, password=password)
+      # subscriber = authenticate(username=username, password=password)
+      subscriber = authenticate(request, username=username, password=password)
       
       if subscriber is not None:
+        # If using session-based authentication
+        # django_login(request, subscriber)
+        
+        # Generate JWT token
+        refresh = RefreshToken.for_user(subscriber)
+                
         # Sucessfully authenticated
         return JsonResponse({
           'message': "Login successful",
+          'token': str(refresh.access_token),
+          'refresh_token': str(refresh),
           'subscriber': {
             'id': subscriber.id,
             'username': subscriber.username,
