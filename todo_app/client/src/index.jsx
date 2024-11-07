@@ -24,35 +24,48 @@ function Main() {
   // Handle login
   const handleLogin = (userData) => {
     setUser(userData);
-    console.log("User logged in successfully:", userData);
+    console.log("User has been logged in successfully:", userData.subscriber.fullname);
   };
 
   // Handle logout
   const handleLogout = () => {
     setUser(null);
-    console.log("User logged out successfully")
+    console.log("User logged out successfully");
   };
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout user={user} onLogout={handleLogout}/>}>
+      <Route path="/" element={<Layout user={user} onLogout={handleLogout} />}>
         <Route index element={<Home />} />
         <Route
           path="todo"
-          element={user ? <ToDoWrapper onLogout={handleLogout}/> : <Login onLogin={handleLogin} />}
+          element={
+            user ? (
+              <ToDoWrapper onLogout={handleLogout} user={user}/>
+            ) : (
+              <Login onLogin={handleLogin}/>
+            )
+          }
         />
         {/* <Route path="todolist" element={<TodoList />} /> */}
-        <Route path="login" element={<Login onLogin={handleLogin} />} />
-        <Route path="reset-password" element={<ResetPassword />}/>
-        <Route path="user-registration" element={<UserRegistration />}/>
+        <Route
+          path="login"
+          element={
+            <div>
+              <Login onLogin={handleLogin} user={user} />
+            </div>
+          }
+        />
+
+        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="user-registration" element={<UserRegistration />} />
       </Route>
     )
   );
 
   return (
     <React.StrictMode>
-      <RouterProvider router={router}>
-      </RouterProvider>
+      <RouterProvider router={router}></RouterProvider>
       {/* The router wraps all components */}
     </React.StrictMode>
   );

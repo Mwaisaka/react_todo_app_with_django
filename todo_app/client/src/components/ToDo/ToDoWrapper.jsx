@@ -6,7 +6,7 @@ import ToDo from "./ToDo";
 import "./ToDoList.css";
 import ToDoApp1 from "../Images/ToDoApp1.png";
 
-function ToDoWrapper({ onLogout }) {
+function ToDoWrapper({ onLogout, user }) {
   const [todos, setToDos] = useState([]);
 
   useEffect(() => {
@@ -154,6 +154,13 @@ function ToDoWrapper({ onLogout }) {
       }}
     >
       <div>
+        {/* Display the current username when available */}
+        {user && (
+          <p className="text-center text-lg text-gray-700 mb-2">
+            Welcome, {user.subscriber.fullname}!
+          </p>
+        )}
+
         <h1 className="text-center font-bold mb-6">MY TASKS</h1>
         <ToDoForm addToDo={addToDo} />
         {/* display todos */}

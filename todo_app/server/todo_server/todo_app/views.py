@@ -220,6 +220,7 @@ def login(request):
           'subscriber': {
             'id': subscriber.id,
             'username': subscriber.username,
+            'fullname': subscriber.fullname
           }
         }, status=200)
       else:
