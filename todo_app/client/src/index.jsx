@@ -24,7 +24,7 @@ function Main() {
   // Handle login
   const handleLogin = (userData) => {
     setUser(userData);
-    console.log("User has been logged in successfully:", userData.subscriber.fullname);
+    console.log("User has been logged in successfully:", userData.fullname);
   };
 
   // Handle logout

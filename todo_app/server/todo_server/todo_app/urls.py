@@ -1,7 +1,9 @@
+from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('api-token-auth/', obtain_auth_token),
     path('',views.home, name='todo_app'),
     path('',views.main, name='main'),
     path('tasks/',views.tasks, name='tasks'),

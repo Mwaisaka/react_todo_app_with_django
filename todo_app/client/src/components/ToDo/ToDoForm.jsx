@@ -1,26 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 // import { CiCirclePlus } from "react-icons/ci";
 
-function ToDoForm({ addToDo }) {
+function ToDoForm({ addToDo, user}) {
   const [task, setTask] = useState("");
-  const [due_date, setDue_date]=useState("");
+  const [due_date, setDue_date] = useState("");
   const [error, setError] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check if the user is authenticated by verifying token presence
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    console.log("Token from UseEffect", token);
+    setIsAuthenticated(!!token);
+  }, [user.token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Logged in user from add todo:",user);
+    // if (!isAuthenticated) {
+    //   setError("Please log in to add tasks.");
+    //   return;
+    // }
 
-    if (task.trim()&& due_date) {
+    if (task.trim() && due_date) {
       const confirmAdd = window.confirm("Do you want to add this new task?");
 
       if (confirmAdd) {
+        // Ensure token is correctly retrieved
+        const token = localStorage.getItem("authToken");
+        console.log("Token from handleSubmit", token);
+        if (!token) {
+          setError("Please log in to add tasks.");
+          return;
+        }
         // If user confirms, add the task
-        fetch("http://127.0.0.1:8000/tasks/add/", {
+        fetch("http://127.0.0.1:8000/tasks/add_task/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // Add Authorization header
           },
-          
-          body: JSON.stringify({ task,due_date }),
+
+          body: JSON.stringify({ task, due_date }),
         })
           .then((response) => {
             if (!response.ok) {
@@ -35,7 +56,7 @@ function ToDoForm({ addToDo }) {
             alert("New task added successfully.");
 
             // Add task to the local list
-            addToDo(data.task, data.due_date );
+            addToDo(data.task, data.due_date);
 
             // Clear form after submission
             setTask("");

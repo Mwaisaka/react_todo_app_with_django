@@ -45,8 +45,13 @@ export default function Login({ onLogin, user }) {
           return response.json();
         })
         .then((user) => {
-          onLogin(user); // Call the onLogin prop with the user data
-          console.log("Current user logged in is:", user.subscriber.fullname);
+          const { token, subscriber } = user;
+          localStorage.setItem("authToken", token); // Store the token in localStorage
+          onLogin(subscriber); // Call onLogin with user data for state update
+          console.log("Current user logged in is:", subscriber.fullname);
+          console.log("Token after logging in is:", token);
+          // onLogin(user); // Call the onLogin prop with the user data
+          // console.log("Current user logged in is:", user.subscriber.fullname);
           navigate("/todo"); // Navigate to the ToDo page on success
           // setRefreshPage(!refreshPage); // Trigger a re-fetch if needed
         })

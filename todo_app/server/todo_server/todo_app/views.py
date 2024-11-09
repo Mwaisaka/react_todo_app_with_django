@@ -11,6 +11,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as django_login
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 
@@ -52,9 +56,14 @@ def testing(request):
 def home(request):
     return HttpResponse("Hello World!Welcome to the ToDo App Home Page!")
 
-@login_required
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])  # Apply token-based authentication
+@permission_classes([IsAuthenticated])  # Restrict to authenticated users only
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def add_task(request):
+  if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=403)
+  
   if request.method=="POST":
     try:
       data=json.loads(request.body) # Parse JSON data from the request body
@@ -182,7 +191,7 @@ def add_subscriber(request):
       return JsonResponse({"error":str(e)},status=500)
   else:
     return JsonResponse({"error":"Post request required"},status=405)
-  
+
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def login(request):
   if request.method == 'POST':
@@ -220,7 +229,7 @@ def login(request):
           'subscriber': {
             'id': subscriber.id,
             'username': subscriber.username,
-            'fullname': subscriber.fullname
+            'fullname': subscriber.fullname,
           }
         }, status=200)
       else:

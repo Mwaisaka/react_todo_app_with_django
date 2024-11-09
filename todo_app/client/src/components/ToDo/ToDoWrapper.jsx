@@ -157,12 +157,12 @@ function ToDoWrapper({ onLogout, user }) {
         {/* Display the current username when available */}
         {user && (
           <p className="text-center text-lg text-gray-700 mb-2">
-            Welcome, {user.subscriber.fullname}!
+            Welcome, {user.fullname}!
           </p>
         )}
 
         <h1 className="text-center font-bold mb-6">MY TASKS</h1>
-        <ToDoForm addToDo={addToDo} />
+        <ToDoForm addToDo={addToDo} user={user}/>
         {/* display todos */}
         <div className="bg-gray-400 w-[100%] py-2 border rounded-lg">
           <div className="flex items-center justify-between w-[95%] mb-4 ml-3 text-xl">
