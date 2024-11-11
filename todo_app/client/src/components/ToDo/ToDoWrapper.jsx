@@ -10,7 +10,14 @@ function ToDoWrapper({ onLogout, user }) {
   const [todos, setToDos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/tasks/")
+    const token = localStorage.getItem("authToken");
+    fetch("http://127.0.0.1:8000/tasks/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Add Authorization header
+      },
+    })
       .then((res) => res.json())
       .then(setToDos);
   }, []);
@@ -162,7 +169,7 @@ function ToDoWrapper({ onLogout, user }) {
         )}
 
         <h1 className="text-center font-bold mb-6">MY TASKS</h1>
-        <ToDoForm addToDo={addToDo} user={user}/>
+        <ToDoForm addToDo={addToDo} user={user} />
         {/* display todos */}
         <div className="bg-gray-400 w-[100%] py-2 border rounded-lg">
           <div className="flex items-center justify-between w-[95%] mb-4 ml-3 text-xl">

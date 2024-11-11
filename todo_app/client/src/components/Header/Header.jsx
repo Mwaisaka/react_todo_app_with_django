@@ -7,7 +7,7 @@ function Header({ user, onLogout }) {
   return (
     <header className="shadow-none sticky z-50 top-2 mb-8 h-20 ">
       <nav
-        className="bg-gray-200 border-gray-300 px-4 lg:px-6 py-2.5 w-full py-6"
+        className="bg-gray-300 border-gray-300 px-4 lg:px-6 py-2.5 w-full py-6"
         // style={{
         //   backgroundImage: `url(${ToDoApp})`,
         //   backgroundRepeat: "no-repeat",

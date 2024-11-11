@@ -23,7 +23,7 @@ def main(request):
     template = loader.get_template('main.html')
     return HttpResponse(template.render())
 
-def tasks(request):
+def show_tasks(request):
   mytasks = Task.objects.all().values()
   template = loader.get_template('tasks.html')
   context = {
@@ -31,8 +31,12 @@ def tasks(request):
   }
   return HttpResponse(template.render(context, request))
 
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])  # Apply JWT authentication
+@permission_classes([IsAuthenticated])  # Restrict to authenticated users
+@csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def tasks(request):
-    tasks = Task.objects.all().values()
+    tasks = Task.objects.filter(user_id=request.user.id).values()
     return JsonResponse(list(tasks), safe=False)
   
 def subscribers(request):
@@ -73,7 +77,7 @@ def add_task(request):
       if task_name:
         
         # Normalize task name (strip leading/trailing spaces and lowercase)
-          task_name = task_name.strip().lower()
+          # task_name = task_name.strip().lower()
           
         # Check if the task already exists for the user (same task name and user)
           existing_task = Task.objects.filter(task=task_name, user_id=request.user.id).first()

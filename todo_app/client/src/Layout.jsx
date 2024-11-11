@@ -2,12 +2,13 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop.jsx";
 
 function Layout({ user, onLogout }) {
   return (
-    <div className="flex flex-col min-h-screen w-full" 
-    // style={{minWidth:"500px",width:"auto"}}
+    <div
+      className="flex flex-col min-h-screen w-full"
+      // style={{minWidth:"500px",width:"auto"}}
     >
       <ScrollToTop />
       <Header user={user} onLogout={onLogout} />
