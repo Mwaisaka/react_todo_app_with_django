@@ -14,6 +14,7 @@ contourpy==1.1.1
 cycler==0.12.1
 decorator==5.1.1
 distlib==0.3.8
+dj-database-url==2.3.0
 Django==4.2.16
 django-cors-headers==4.4.0
 django-stubs==5.1.0
@@ -33,6 +34,7 @@ Flask-RESTful==0.3.10
 Flask-SQLAlchemy==3.1.1
 fonttools==4.53.0
 greenlet==3.0.3
+gunicorn==23.0.0
 huepy==1.2.1
 idna==3.6
 importlib-metadata==7.0.1
@@ -88,9 +90,5 @@ virtualenv==20.25.0
 vite==1.5.2
 wcwidth==0.2.13
 Werkzeug==3.0.1
+whitenoise==6.7.0
 zipp==3.17.0
-
-gunicorn
-whitenoise
-django-cors-headers
-
