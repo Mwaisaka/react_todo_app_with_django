@@ -3,11 +3,13 @@ import React from "react";
 
 function TodoItem({ task, deleteTask, toggleCompleted }) {
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
     function handleChange() {
         toggleCompleted(task.id);
 
         // Send updated status to the backend
-    fetch(`http://127.0.0.1:8000/tasks/${task.id}/`, {
+    fetch(`${API_URL}/tasks/${task.id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

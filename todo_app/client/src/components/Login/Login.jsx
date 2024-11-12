@@ -8,6 +8,8 @@ export default function Login({ onLogin, user }) {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // Validation Schema for form inputs
   const formSchema = yup.object().shape({
     username: yup
@@ -27,7 +29,7 @@ export default function Login({ onLogin, user }) {
     },
     validationSchema: formSchema,
     onSubmit: ({ username, password }, { setSubmitting }) => {
-      fetch("http://127.0.0.1:8000/login/", {
+      fetch(`${API_URL}/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

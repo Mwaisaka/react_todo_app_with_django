@@ -7,6 +7,8 @@ function ToDoForm({ addToDo, user}) {
   const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // Check if the user is authenticated by verifying token presence
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -34,7 +36,7 @@ function ToDoForm({ addToDo, user}) {
           return;
         }
         // If user confirms, add the task
-        fetch("http://127.0.0.1:8000/tasks/add_task/", {
+        fetch(`${API_URL}/tasks/add_task/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

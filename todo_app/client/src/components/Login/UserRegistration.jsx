@@ -9,6 +9,8 @@ export default function Registration({ onLogin, user }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const formSchema = yup.object().shape({
     username: yup
       .string()
@@ -42,7 +44,7 @@ export default function Registration({ onLogin, user }) {
     },
     validationSchema: formSchema,
     onSubmit: () => {
-      fetch("http://127.0.0.1:8000/add_subscriber/", {
+      fetch(`${API_URL}/add_subscriber/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

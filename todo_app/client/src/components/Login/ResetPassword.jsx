@@ -10,6 +10,8 @@ export default function ResetPassword() {
   const [resetError, setResetError] = useState(null);
   const navigate = useNavigate();
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const formSchema = yup.object().shape({
     email: yup
       .string()
@@ -36,7 +38,7 @@ export default function ResetPassword() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("http://127.0.0.1:8000/reset_password/", {
+      fetch(`${API_URL}/reset_password/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
