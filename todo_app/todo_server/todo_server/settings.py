@@ -204,8 +204,8 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['todo-app.onrender.com']
+ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ['todo-app.onrender.com']
 
 
 # Application definition
@@ -239,9 +239,9 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "https://todo-app.onrender.com",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://todo-app.onrender.com",
+# ]
 
 ROOT_URLCONF = 'todo_server.urls'
 
