@@ -3,7 +3,8 @@ import React from "react";
 
 function TodoItem({ task, deleteTask, toggleCompleted }) {
 
-  const API_URL = "http://127.0.0.1:8000";
+  // const API_URL = "http://127.0.0.1:8000";
+  const API_URL = process.env.REACT_APP_API_URL;
 
     function handleChange() {
         toggleCompleted(task.id);

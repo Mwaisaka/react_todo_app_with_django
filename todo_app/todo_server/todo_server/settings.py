@@ -189,7 +189,7 @@ AUTH_USER_MODEL = 'todo_app.Subscriber'  # Replace with your app name and custom
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://db.todoapp')
+    'default': dj_database_url.config(default='postgres:///db.todoapp')
 }
 
 # Quick-start development settings - unsuitable for production
@@ -199,6 +199,8 @@ DATABASES = {
 SECRET_KEY = 'django-insecure-9*oqtuq#571+!ww&y)5jk5_kt+o+7d_6f(o1&0)g94vlk3d@e^'
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'SECRET_KEY')
+# DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -273,6 +275,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.todoapp',  # SQLite database file will be created in the base directory
     }
 }
+
+# Database configuration
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.todoapp'}")
+#     )
+# }
 
 
 # Password validation
