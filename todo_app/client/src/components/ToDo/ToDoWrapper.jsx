@@ -13,6 +13,7 @@ function ToDoWrapper({ onLogout, user }) {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
+    console.log("Token from Todo Wrapper UseEffect", token);
     fetch(`${API_URL}/tasks/`, {
       method: "GET",
       headers: {
