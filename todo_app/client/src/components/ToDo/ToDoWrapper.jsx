@@ -9,7 +9,8 @@ import ToDoApp1 from "../Images/ToDoApp1.png";
 function ToDoWrapper({ onLogout, user }) {
   const [todos, setToDos] = useState([]);
 
-  const API_URL = "http://127.0.0.1:8000";
+  // const API_URL = "http://127.0.0.1:8000";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
