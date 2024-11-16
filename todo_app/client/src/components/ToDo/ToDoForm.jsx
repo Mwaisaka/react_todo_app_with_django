@@ -7,7 +7,6 @@ function ToDoForm({ addToDo, user}) {
   const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // const API_URL = "http://127.0.0.1:8000";
   const API_URL = process.env.REACT_APP_API_URL;
 
   // Check if the user is authenticated by verifying token presence
