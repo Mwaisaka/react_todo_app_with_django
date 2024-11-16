@@ -18,14 +18,14 @@ function ToDoWrapper({ onLogout, user }) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Add Authorization header
+        Authorization : `Bearer ${token}`, // Add Authorization header
       },
     })
       .then((res) => res.json())
       .then(setToDos);
   }, []);
 
-  console.log("Tasks", todos);
+  console.log("Tasks from ToDo Wrapper...", todos);
 
   const addToDo = (todo) => {
     setToDos([
