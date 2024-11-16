@@ -207,7 +207,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'SECRET_KEY')
 # DATABASE_URL = os.getenv('DATABASE_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = ['todo-app.onrender.com']
