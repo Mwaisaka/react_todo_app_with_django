@@ -44,7 +44,7 @@ function ToDoWrapper({ onLogout, user }) {
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/tasks/delete/${id}`,
+          `${API_URL}/tasks/delete/${id}`,
           {
             method: "DELETE",
           }
@@ -74,7 +74,7 @@ function ToDoWrapper({ onLogout, user }) {
     const updatedCompletionStatus = !taskToToggle.completed;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/tasks/edit/${id}/`, {
+      const response = await fetch(`${API_URL}/tasks/edit/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +108,7 @@ function ToDoWrapper({ onLogout, user }) {
 
   const editTask = async ({ task, dueDate }, id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/tasks/edit/${id}/`, {
+      const response = await fetch(`${API_URL}/tasks/edit/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
