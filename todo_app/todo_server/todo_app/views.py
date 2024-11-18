@@ -106,7 +106,7 @@ def add_task(request):
         return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
   else:
       return JsonResponse({'error': 'POST request required'}, status=405)
-    
+  
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def delete_task(request, id):
   if request.method == 'DELETE':
@@ -120,8 +120,14 @@ def delete_task(request, id):
   else:
     return JsonResponse({'error': 'Delete request required'}, status=405)
 
+@api_view(['PUT'])
+@authentication_classes([JWTAuthentication])  # Apply token-based authentication
+@permission_classes([IsAuthenticated])  # Restrict to authenticated users only
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def edit_task(request, id):
+  if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=403)
+      
   if request.method == 'PUT':
     try:
       # Retrieve the task by id
