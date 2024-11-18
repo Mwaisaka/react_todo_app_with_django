@@ -107,10 +107,12 @@ function ToDoWrapper({ onLogout, user }) {
 
   const editTask = async ({ task, dueDate }, id) => {
     try {
+      const token = localStorage.getItem("authToken");
       const response = await fetch(`${API_URL}/tasks/edit/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization : `Bearer ${token}`, // Add Authorization header
         },
         body: JSON.stringify({ task, due_date: dueDate }), // Send only the updated task name
       });
