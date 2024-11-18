@@ -42,12 +42,17 @@ function ToDoWrapper({ onLogout, user }) {
 
     if (confirmDelete) {
       try {
+        console.log("Deleting task with ID:", id);
+        const token = localStorage.getItem("authToken");
         const response = await fetch(
           `${API_URL}/tasks/delete/${id}`,
           {
             method: "DELETE",
-          }
+            headers: {"Authorization" : `Bearer ${token}`, // Add Authorization header
+            },
+          },
         );
+        console.log("Delete response:", response);
         if (response.ok) {
           setToDos(todos.filter((todo) => todo.id !== id));
           alert("Task deleted successfully");
@@ -73,10 +78,12 @@ function ToDoWrapper({ onLogout, user }) {
     const updatedCompletionStatus = !taskToToggle.completed;
 
     try {
+      const token = localStorage.getItem("authToken");
       const response = await fetch(`${API_URL}/tasks/edit/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization" : `Bearer ${token}`, // Add Authorization header
         },
         body: JSON.stringify({ completed: updatedCompletionStatus }),
       });
@@ -108,11 +115,12 @@ function ToDoWrapper({ onLogout, user }) {
   const editTask = async ({ task, dueDate }, id) => {
     try {
       const token = localStorage.getItem("authToken");
+      console.log("Token from edit task", token);
       const response = await fetch(`${API_URL}/tasks/edit/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization : `Bearer ${token}`, // Add Authorization header
+          "Authorization" : `Bearer ${token}`, // Add Authorization header
         },
         body: JSON.stringify({ task, due_date: dueDate }), // Send only the updated task name
       });

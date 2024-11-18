@@ -106,14 +106,20 @@ def add_task(request):
         return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
   else:
       return JsonResponse({'error': 'POST request required'}, status=405)
-  
+
+@api_view(['DELETE'])
+@authentication_classes([JWTAuthentication])  # Apply token-based authentication
+@permission_classes([IsAuthenticated])  # Restrict to authenticated users only
 @csrf_exempt  # Exempting CSRF for API requests (can be handled better for production)
 def delete_task(request, id):
+  if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=403)
+      
   if request.method == 'DELETE':
     try:
       # Try to delete the task with the given id
       # task = get_object_or_404(Task, id=id)
-      task = get_object_or_404(Task, id=id, user_id=request.user.id)
+      task = get_object_or_404(Task, id=id)
       task.delete()
       return JsonResponse({'message': 'Task deleted successfully'}, status=200)
     except Task.DoesNotExist:
