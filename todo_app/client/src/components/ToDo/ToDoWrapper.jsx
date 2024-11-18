@@ -23,7 +23,7 @@ function ToDoWrapper({ onLogout, user }) {
     })
       .then((res) => res.json())
       .then(setToDos);
-  }, []);
+  }, [API_URL]);
 
   console.log("Tasks from ToDo Wrapper...", todos);
 
