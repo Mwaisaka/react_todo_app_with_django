@@ -83,7 +83,7 @@ def add_task(request):
           existing_task = Task.objects.filter(task=task_name, user_id=request.user.id).first()
           
           if existing_task:
-              return JsonResponse({'error': 'Task with the same name already exists'}, status=400)
+              return JsonResponse({'error': 'Task with the same name already exists'}, status=403)
           
           due_date = (
                     datetime.strptime(due_date_str, '%Y-%m-%d') if due_date_str else None

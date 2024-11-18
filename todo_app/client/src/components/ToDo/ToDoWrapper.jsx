@@ -11,7 +11,7 @@ function ToDoWrapper({ onLogout, user }) {
 
   const API_URL = process.env.REACT_APP_API_URL;
 
-  useEffect(() => {
+  const fetchTasks = () => {
     const token = localStorage.getItem("authToken");
     console.log("Token from Todo Wrapper UseEffect", token);
     fetch(`${API_URL}/tasks/`, {
@@ -22,7 +22,15 @@ function ToDoWrapper({ onLogout, user }) {
       },
     })
       .then((res) => res.json())
-      .then(setToDos);
+      .then(setToDos)
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+        alert("Failed to fetch tasks. Please try again later.");
+      });
+  };
+
+  useEffect(() => {
+    fetchTasks();
   }, [API_URL]);
 
   console.log("Tasks from ToDo Wrapper...", todos);
@@ -32,6 +40,7 @@ function ToDoWrapper({ onLogout, user }) {
       ...todos,
       { id: uuidv4(), task: todo, completed: false, isEditing: false },
     ]);
+    fetchTasks(); // Refresh the list after deleting a task
   };
 
   const deleteTodo = async (id) => {
@@ -54,6 +63,7 @@ function ToDoWrapper({ onLogout, user }) {
         );
         console.log("Delete response:", response);
         if (response.ok) {
+          fetchTasks(); // Refresh the list after deleting a task
           setToDos(todos.filter((todo) => todo.id !== id));
           alert("Task deleted successfully");
         }
@@ -126,6 +136,7 @@ function ToDoWrapper({ onLogout, user }) {
       });
 
       if (response.ok) {
+        fetchTasks(); // Refresh the list after deleting a task
         const updatedTask = await response.json();
         setToDos(
           todos.map((todo) =>
