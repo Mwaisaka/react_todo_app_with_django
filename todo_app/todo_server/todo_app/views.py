@@ -112,7 +112,8 @@ def delete_task(request, id):
   if request.method == 'DELETE':
     try:
       # Try to delete the task with the given id
-      task = get_object_or_404(Task, id=id)
+      # task = get_object_or_404(Task, id=id)
+      task = get_object_or_404(Task, id=id, user_id=request.user.id)
       task.delete()
       return JsonResponse({'message': 'Task deleted successfully'}, status=200)
     except Task.DoesNotExist:
@@ -131,7 +132,9 @@ def edit_task(request, id):
   if request.method == 'PUT':
     try:
       # Retrieve the task by id
-      task=get_object_or_404(Task, id=id)
+      # task=get_object_or_404(Task, id=id)
+      
+      task = get_object_or_404(Task, id=id, user_id=request.user.id)
       
       # Parse the JSON data from the request body
       data=json.loads(request.body)
